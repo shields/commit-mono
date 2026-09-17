@@ -23,3 +23,10 @@ bun.lockb
 *.njsproj
 *.sln
 *.sw?
+
+# Font tooling (tools/) and its generated sources, binaries and proofs
+/build
+tools/.venv
+__pycache__
+.ruff_cache
+.pytest_cache
