@@ -124,12 +124,12 @@ def _describe_contextual(subtable: BaseTable, lookup: Lookup, classes: _Classes)
         return [f"{sets[0]} | {sets[1]} | {sets[2]} → {actions}"]
     if fmt == 2:
         rule_sets = getattr(subtable, "ChainSubClassSet", getattr(subtable, "SubClassSet", []))
-        rules = [rule for rs in rule_sets if rs for rule in _rules_of(rs, "ChainSubClassRule", "SubClassRule")]
+        rules = [*_rules_of(rs, "ChainSubClassRule", "SubClassRule") for rs in rule_sets if rs]
         for rule in rules:
             lookup.calls.update(r.LookupListIndex for r in getattr(rule, "SubstLookupRecord", []))
         return [f"{len(rules)} class-based rules over {len(_glyphs(subtable.Coverage))} first glyphs"]
     rule_sets = getattr(subtable, "ChainSubRuleSet", getattr(subtable, "SubRuleSet", []))
-    rules = [rule for rs in rule_sets if rs for rule in _rules_of(rs, "ChainSubRule", "SubRule")]
+    rules = [*_rules_of(rs, "ChainSubRule", "SubRule") for rs in rule_sets if rs]
     for rule in rules:
         lookup.calls.update(r.LookupListIndex for r in getattr(rule, "SubstLookupRecord", []))
     return [f"{len(rules)} glyph-based rules over {len(_glyphs(subtable.Coverage))} first glyphs"]
@@ -166,7 +166,7 @@ def gsub_features(font: TTFont) -> list[Feature]:
         classes = _Classes()
         lookups = [_describe_lookup(table, index, classes, nested=False) for index in indices]
         seen = set(indices)
-        queue = [index for lookup in lookups for index in sorted(lookup.calls)]
+        queue = [*sorted(lookup.calls) for lookup in lookups]
         while queue:
             index = queue.pop(0)
             if index in seen:

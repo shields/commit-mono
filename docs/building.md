@@ -1,13 +1,13 @@
 # Building, verifying and proofing
 
-The `tools/` directory is a [uv](https://docs.astral.sh/uv/) project that provides the
+The `tools/` directory is a Python 3.15 [uv](https://docs.astral.sh/uv/) project that provides the
 `cmfont` command. It needs no font editor: it decompiles the shipped binaries into UFO
 sources with `ufo-extractor`, compiles them back with `fontmake`, and checks the result
 against the originals with fontTools. Shaping for proofs uses HarfBuzz.
 
 ```sh
 cd tools
-uv sync --group dev          # creates tools/.venv with Python 3.14 and all dependencies
+uv sync --group dev
 uv run cmfont --help
 ```
 
