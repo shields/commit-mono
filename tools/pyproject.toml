@@ -35,3 +35,6 @@ select = ["E", "F", "I", "UP", "B", "ANN", "RUF", "SIM"]
 testpaths = ["tests"]
 addopts = "-q"
 markers = ["slow: extracts and rebuilds fonts, takes minutes"]
+
+[tool.uv]
+exclude-newer = "3 days"
